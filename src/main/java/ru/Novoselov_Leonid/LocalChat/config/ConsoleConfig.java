@@ -8,7 +8,7 @@ import ru.Novoselov_Leonid.LocalChat.command.CommandProcessor;
 
 import java.util.Scanner;
 
-@Configuration
+// @Configuration
 public class ConsoleConfig {
 
     private final CommandProcessor commandProcessor;
