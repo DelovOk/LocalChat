@@ -11,5 +11,6 @@ public interface RoomMemberRepository extends CrudRepository<RoomMember, Long> {
     Optional<RoomMember> findByRoomIdAndUserId(Long roomId, Long userId);
     List<RoomMember> findByRoomIdAndIsBannedFalse(Long roomId);
     List<RoomMember> findByRoomIdAndIsBannedTrue(Long roomId);
+    List<RoomMember> findByRoomId(Long roomId);
     void deleteByRoomId(Long roomId);
 }

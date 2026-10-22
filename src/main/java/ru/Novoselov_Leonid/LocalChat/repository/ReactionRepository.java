@@ -10,5 +10,4 @@ public interface ReactionRepository extends CrudRepository<Reaction, Long> {
     List<Reaction> findByMessageId(Long messageId);
     Optional<Reaction> findByMessageIdAndUserIdAndCode(Long messageId, Long userId, String code);
     List<Reaction> findByMessageIdAndUserId(Long messageId, Long userId);
-
 }

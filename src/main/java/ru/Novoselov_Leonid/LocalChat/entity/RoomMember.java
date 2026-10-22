@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import ru.Novoselov_Leonid.LocalChat.enums.MemberRole;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "room_members")

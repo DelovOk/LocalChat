@@ -6,19 +6,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import ru.Novoselov_Leonid.LocalChat.dao.CustomQueryDao;
 import ru.Novoselov_Leonid.LocalChat.entity.ChatRoom;
 import ru.Novoselov_Leonid.LocalChat.entity.RoomMember;
 import ru.Novoselov_Leonid.LocalChat.entity.User;
-import ru.Novoselov_Leonid.LocalChat.entity.UserProfile;
-import ru.Novoselov_Leonid.LocalChat.enums.MemberRole;
 import ru.Novoselov_Leonid.LocalChat.enums.UserStatus;
 import ru.Novoselov_Leonid.LocalChat.repository.ChatRoomRepository;
 import ru.Novoselov_Leonid.LocalChat.repository.RoomMemberRepository;
 import ru.Novoselov_Leonid.LocalChat.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,11 +45,7 @@ public class RepositoryAndCriteriaTest {
         testUser.setNick("user" + UUID.randomUUID().toString().substring(0, 5));
         testUser.setLogin("login" + UUID.randomUUID().toString().substring(0, 5));
         testUser.setPassword("password");
-
-        UserProfile profile = new UserProfile();
-        profile.setStatus(UserStatus.ONLINE);
-        profile.setUser(testUser);
-        testUser.setProfile(profile);
+        testUser.setStatus(UserStatus.ONLINE);
 
         userRepository.save(testUser);
 
@@ -69,7 +61,7 @@ public class RepositoryAndCriteriaTest {
 
     @Test
     void testUserRepositoryFindByProfileStatus() {
-        List<User> users = userRepository.findByProfileStatus(UserStatus.ONLINE);
+        List<User> users = userRepository.findByStatus(UserStatus.ONLINE);
         Assertions.assertFalse(users.isEmpty());
         Assertions.assertTrue(users.stream().anyMatch(u -> u.getId().equals(testUser.getId())));
     }

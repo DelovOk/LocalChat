@@ -3,11 +3,9 @@ package ru.Novoselov_Leonid.LocalChat.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.Novoselov_Leonid.LocalChat.entity.RoomMember;
 import ru.Novoselov_Leonid.LocalChat.entity.User;
-import ru.Novoselov_Leonid.LocalChat.entity.UserProfile;
 import ru.Novoselov_Leonid.LocalChat.enums.UserStatus;
 
 import java.util.List;
@@ -45,8 +43,7 @@ public class CustomQueryDaoImpl implements CustomQueryDao {
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 
         Root<User> root = criteriaQuery.from(User.class);
-        Join<User, UserProfile> profileJoin = root.join("profile", JoinType.INNER);
-        Predicate statusPredicate = criteriaBuilder.equal(profileJoin.get("status"), status);
+        Predicate statusPredicate = criteriaBuilder.equal(root.get("status"), status);
 
         criteriaQuery.select(root).where(statusPredicate);
 

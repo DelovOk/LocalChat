@@ -1,7 +1,9 @@
 package ru.Novoselov_Leonid.LocalChat.entity;
 
 import jakarta.persistence.*;
+import ru.Novoselov_Leonid.LocalChat.enums.UserStatus;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +23,18 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private UserProfile profile;
+    @Column(nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Message> messages = new ArrayList<>();
+    @Column
+    private String avatar;
+
+    @Column(name = "last_seen_at")
+    private LocalDateTime lastSeenAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoomMember> memberships = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reaction> reactions = new ArrayList<>();
 
     public User() {}
 
@@ -67,20 +70,28 @@ public class User {
         this.password = password;
     }
 
-    public UserProfile getProfile() {
-        return profile;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setProfile(UserProfile profile) {
-        this.profile = profile;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public LocalDateTime getLastSeenAt() {
+        return lastSeenAt;
+    }
+
+    public void setLastSeenAt(LocalDateTime lastSeenAt) {
+        this.lastSeenAt = lastSeenAt;
     }
 
     public List<RoomMember> getMemberships() {
@@ -89,13 +100,5 @@ public class User {
 
     public void setMemberships(List<RoomMember> memberships) {
         this.memberships = memberships;
-    }
-
-    public List<Reaction> getReactions() {
-        return reactions;
-    }
-
-    public void setReactions(List<Reaction> reactions) {
-        this.reactions = reactions;
     }
 }

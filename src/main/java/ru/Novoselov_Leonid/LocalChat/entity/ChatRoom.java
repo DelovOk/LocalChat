@@ -30,10 +30,7 @@ public class ChatRoom {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Message> messages = new ArrayList<>();;
-
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RoomMember> members = new ArrayList<>();;
+    private List<RoomMember> members = new ArrayList<>();
 
     public ChatRoom() {}
 
@@ -69,22 +66,6 @@ public class ChatRoom {
         this.createdAt = createdAt;
     }
 
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    public List<RoomMember> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<RoomMember> members) {
-        this.members = members;
-    }
-
     public String getInviteCode() {
         return inviteCode;
     }
@@ -99,5 +80,13 @@ public class ChatRoom {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<RoomMember> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<RoomMember> members) {
+        this.members = members;
     }
 }
