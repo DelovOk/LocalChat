@@ -24,17 +24,17 @@ public class UserServiceImpl implements UserService {
         user.setLogin(login);
         user.setPassword(password);
         user.setNick(nick);
-        userRepository.create(user);
+        userRepository.save(user);
     }
 
     @Override
     public User findById(Long id) {
-        return userRepository.read(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
     public void deleteById(Long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByNick(String nick) {
-        return userRepository.findByNick(nick);
+        return userRepository.findByNickContainingIgnoreCase(nick).getFirst();
     }
 
     @Override
@@ -58,11 +58,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private void updateUser(Long id, Consumer<User> updater) {
-        User user = userRepository.read(id);
-        if (user != null) {
+        userRepository.findById(id).ifPresent(user -> {
             updater.accept(user);
-            userRepository.update(user);
-        }
+            userRepository.save(user);
+        });
     }
 
     @PostConstruct
