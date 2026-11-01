@@ -1,10 +1,12 @@
 package ru.Novoselov_Leonid.LocalChat.command;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import ru.Novoselov_Leonid.LocalChat.entity.User;
 import ru.Novoselov_Leonid.LocalChat.service.UserService;
 
-@Component
+
+// @Component
 public class CommandProcessor {
     private final UserService userService;
 
