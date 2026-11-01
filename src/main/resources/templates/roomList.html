@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chats</title>
+</head>
+<body>
+<h1>Chats</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Invite code</th>
+        <th>Created at</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.id}"></td>
+        <td th:text="${room.title}"></td>
+        <td th:text="${room.description}"></td>
+        <td th:text="${room.inviteCode}"></td>
+        <td th:text="${room.createdAt}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
