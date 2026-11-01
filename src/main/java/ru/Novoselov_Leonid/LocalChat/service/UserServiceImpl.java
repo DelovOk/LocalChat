@@ -1,9 +1,10 @@
 package ru.Novoselov_Leonid.LocalChat.service;
 
-import jakarta.annotation.PostConstruct;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.Novoselov_Leonid.LocalChat.config.AppPropertiesConfig;
 import ru.Novoselov_Leonid.LocalChat.entity.User;
+import ru.Novoselov_Leonid.LocalChat.enums.UserRole;
+import ru.Novoselov_Leonid.LocalChat.enums.UserStatus;
 import ru.Novoselov_Leonid.LocalChat.repository.UserRepository;
 
 import java.util.function.Consumer;
@@ -11,19 +12,23 @@ import java.util.function.Consumer;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final AppPropertiesConfig appPropertiesConfig;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, AppPropertiesConfig appPropertiesConfig) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.appPropertiesConfig = appPropertiesConfig;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
-    public void createUser(Long id, String login, String password, String nick) {
+    public void createUser(String login, String password, String nick) {
+        if (userRepository.findByLogin(login).isPresent()) {
+            throw new RuntimeException("User with this login already exists");
+        }
         User user = new User();
-        user.setId(id);
         user.setLogin(login);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setNick(nick);
+        user.setStatus(UserStatus.ONLINE);
+        user.setRole(UserRole.USER);
         userRepository.save(user);
     }
 
@@ -57,16 +62,13 @@ public class UserServiceImpl implements UserService {
         updateUser(id, user -> user.setPassword(newPassword));
     }
 
+    @Override
+    public User findByLogin(String login) { return userRepository.findByLogin(login).orElse(null); }
+
     private void updateUser(Long id, Consumer<User> updater) {
         userRepository.findById(id).ifPresent(user -> {
             updater.accept(user);
             userRepository.save(user);
         });
-    }
-
-    @PostConstruct
-    public void printAppInfo() {
-        System.out.println("Приложение: " + appPropertiesConfig.getAppName());
-        System.out.println("Версия:     " + appPropertiesConfig.getAppVersion());
     }
 }
