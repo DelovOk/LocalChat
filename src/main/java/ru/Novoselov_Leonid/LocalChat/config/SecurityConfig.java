@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .defaultSuccessUrl("/custom/chat-rooms/view/list", true)
+                .defaultSuccessUrl("/reports", true)
                 .permitAll()
             )
             .logout(logout -> logout
