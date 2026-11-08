@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчет</title>
+</head>
+<body>
+<h1>Отчет</h1>
+
+<table>
+    <tr>
+        <th>Параметр</th>
+        <th>Значение</th>
+        <th>Затраченное время</th>
+    </tr>
+    <tr>
+        <td>Кол-во пользователей</td>
+        <td th:text="${usersCount}">0</td>
+        <td th:text="${userDuration} + ' мс'"></td>
+    </tr>
+    <tr>
+        <td>Кол-во объектов сущности (Message)</td>
+        <td th:text="${items.size()}"></td>
+        <td th:text="${itemsDuration} + ' мс'"></td>
+    </tr>
+    <tr>
+        <td>Общее время формирования отчета</td>
+        <td colspan="2" th:text="${totalDuration} + ' мс'"></td>
+    </tr>
+</table>
+
+<h2>Список объектов</h2>
+<ul>
+    <li th:each="item : ${items}" th:text="${item}"></li>
+</ul>
+</body>
+</html>
