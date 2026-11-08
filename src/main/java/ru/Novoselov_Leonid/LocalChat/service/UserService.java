@@ -3,7 +3,7 @@ package ru.Novoselov_Leonid.LocalChat.service;
 import ru.Novoselov_Leonid.LocalChat.entity.User;
 
 public interface UserService {
-    void createUser(Long id, String login, String password, String nick);
+    void createUser(String login, String password, String nick);
 
     User findById(Long id);
 
@@ -16,4 +16,6 @@ public interface UserService {
     User findByNick(String nick);
 
     void updatePassword(Long id, String newPassword);
+
+    User findByLogin(String login);
 }

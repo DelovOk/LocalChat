@@ -1,6 +1,7 @@
 package ru.Novoselov_Leonid.LocalChat.entity;
 
 import jakarta.persistence.*;
+import ru.Novoselov_Leonid.LocalChat.enums.UserRole;
 import ru.Novoselov_Leonid.LocalChat.enums.UserStatus;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,10 @@ public class User {
     @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+
+    @Column(nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @Column
     private String avatar;
@@ -100,5 +105,13 @@ public class User {
 
     public void setMemberships(List<RoomMember> memberships) {
         this.memberships = memberships;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
